@@ -2,12 +2,14 @@ package life;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import kro.frame.KFrame;
 import kro.frame.Paintable;
 
 public class Main implements Paintable {
-	final int WIDTH = 140, HEIGHT = 140;
+	final int WIDTH = 100, HEIGHT = 100;
 
 	Cell[][] cells = new Cell[WIDTH][HEIGHT];
 	Cell[][] futureCells = new Cell[WIDTH][HEIGHT];
@@ -15,6 +17,9 @@ public class Main implements Paintable {
 	int cellSize = 5;
 
 	KFrame kFrame = new KFrame(WIDTH * cellSize, HEIGHT * cellSize, "ַûחםü", this);
+
+
+	boolean move = false;
 
 	public static void main(String[] args) {
 		new Main();
@@ -41,6 +46,29 @@ public class Main implements Paintable {
 				}
 			}
 		}).start();
+
+
+		kFrame.getKPanel().addKeyListener(new KeyListener() {
+			public void keyTyped(KeyEvent e) {
+
+			}
+
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_F5) {
+					move = false;
+					cells = new Cell[WIDTH][HEIGHT];
+					futureCells = new Cell[WIDTH][HEIGHT];
+					init();
+					move = true;
+				}
+			}
+
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_F6) {
+					move = false;
+				}
+			}
+		});
 	}
 
 	private void init() {
@@ -53,18 +81,19 @@ public class Main implements Paintable {
 
 		for (int xx = 0; xx < WIDTH; xx++) {
 			for (int yy = 0; yy < HEIGHT; yy++) {
-				cells[xx][yy].isLive = Math.random() >= 0.5 ? true : false;
+				cells[xx][yy].isLive = Math.random() >= 0.9 ? true : false;
 			}
 		}
 	}
 
 	private void run() {
-
+		move = true;
 		while (true) {
 			// step
 			makeFutureCells();
 
 			cells = futureCells;
+			while(!move);
 			try {
 				Thread.sleep(100);
 			} catch (Exception ex) {
@@ -152,12 +181,12 @@ public class Main implements Paintable {
 		} catch (Exception ex) {
 		}
 
-		if (c == 16711680) {
+		/*if (c == 16711680) {
 			c = 255;
 		} else {
 			//c *= 256;
 		}
-		System.out.println(c);
+		System.out.println(c);*/
 	}
 
 }

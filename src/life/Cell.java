@@ -1,6 +1,6 @@
 package life;
 
-public class Cell {
+public class Cell{
 
 	boolean isLive = false;
 

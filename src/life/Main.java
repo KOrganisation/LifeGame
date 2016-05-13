@@ -23,9 +23,9 @@ public class Main implements Paintable{
 
 
 	volatile boolean move = false;
-	
-	
-	
+
+
+
 	public static void main(String[] args){
 		new Main();
 	}
@@ -38,8 +38,9 @@ public class Main implements Paintable{
 	}
 
 	int button = 0;
-	
+
 	private void initFrame(){
+
 		kFrame.setVisible(true);
 
 		new Thread(new Runnable(){
@@ -72,7 +73,7 @@ public class Main implements Paintable{
 					move = true;
 				}
 			}
-			
+
 
 			public void keyPressed(KeyEvent e){
 				if(e.getKeyCode() == KeyEvent.VK_F6){
@@ -80,49 +81,57 @@ public class Main implements Paintable{
 				}
 			}
 		});
-		
-		
-		
+
+
+
 		kFrame.getKPanel().addMouseListener(new MouseListener(){
 			public void mouseReleased(MouseEvent e){
 				button = 0;
 			}
-			
+
 			public void mousePressed(MouseEvent e){
 				if(e.getButton() == MouseEvent.BUTTON1){
 					setIsLiveC(e.getX() / cellSize, e.getY() / cellSize, true);
-					
+
 					button = 1;
 				}
 				if(e.getButton() == MouseEvent.BUTTON3){
 					setIsLiveC(e.getX() / cellSize, e.getY() / cellSize, false);
-				
+
 					button = 2;
 				}
-				
+
+
+
+				/*for ships
+				setIsLiveC(e.getX() / cellSize, e.getY() / cellSize, true);
+				setIsLiveC(e.getX() / cellSize + 1, e.getY() / cellSize, true);
+				setIsLiveC(e.getX() / cellSize, e.getY() / cellSize + 1, true);
+				setIsLiveC(e.getX() / cellSize - 1, e.getY() / cellSize + 1, true);
+				setIsLiveC(e.getX() / cellSize - 1, e.getY() / cellSize - 1, true);*/
 			}
-			
+
 			public void mouseExited(MouseEvent e){
-				
+
 			}
-			
+
 			public void mouseEntered(MouseEvent e){
-				
+
 			}
-			
+
 			public void mouseClicked(MouseEvent e){
-				
+
 			}
 		});
-		
+
 		kFrame.getKPanel().addMouseMotionListener(new MouseMotionListener(){
 			int x = -1, y = -1;
-			
+
 			public void mouseMoved(MouseEvent e){
 				x = -1;
 				y = -1;
 			}
-			
+
 			public void mouseDragged(MouseEvent e){
 				if(button == 1){
 					int _x = e.getX() / cellSize;
@@ -160,7 +169,7 @@ public class Main implements Paintable{
 			}
 		}
 	}
-	
+
 	private void clearField(){
 		for(int xx = 0; xx < WIDTH; xx++){
 			for(int yy = 0; yy < HEIGHT; yy++){
@@ -178,14 +187,14 @@ public class Main implements Paintable{
 
 			while(!move);
 			try{
-				Thread.sleep(90);
+				Thread.sleep(10);
 			}catch(Exception ex){
 			}
 		}
 
 	}
 
-	
+
 	private void makeFutureCells(){
 		for(int xx = 0; xx < WIDTH; xx++){
 			for(int yy = 0; yy < HEIGHT; yy++){
@@ -203,7 +212,7 @@ public class Main implements Paintable{
 				}
 			}
 		}
-		
+
 		for(int xx = 0; xx < WIDTH; xx++){
 			for(int yy = 0; yy < HEIGHT; yy++){
 				setIsLiveC(xx, yy, isLiveF(xx, yy));
@@ -228,7 +237,7 @@ public class Main implements Paintable{
 
 		return n;
 	}
-	
+
 	//current
 	private boolean isLiveC(int x, int y){
 		int _x = x, _y = y;
@@ -248,7 +257,7 @@ public class Main implements Paintable{
 
 		return cells[_x][_y].isLive;
 	}
-	
+
 	//future
 	private boolean isLiveF(int x, int y){
 		int _x = x, _y = y;
@@ -268,15 +277,45 @@ public class Main implements Paintable{
 
 		return futureCells[_x][_y].isLive;
 	}
-	
+
 	//current
 	private void setIsLiveC(int x, int y, boolean isLive){
-		cells[x][y].isLive = isLive;
+		int _x = x, _y = y;
+		if(x == -1){
+			_x = WIDTH - 1;
+		}
+		if(x == WIDTH){
+			_x = 0;
+		}
+
+		if(y == -1){
+			_y = HEIGHT - 1;
+		}
+		if(y == HEIGHT){
+			_y = 0;
+		}
+
+		cells[_x][_y].isLive = isLive;
 	}
-	
+
 	//future
 	private void setIsLiveF(int x, int y, boolean isLive){
-		futureCells[x][y].isLive = isLive;
+		int _x = x, _y = y;
+		if(x == -1){
+			_x = WIDTH - 1;
+		}
+		if(x == WIDTH){
+			_x = 0;
+		}
+
+		if(y == -1){
+			_y = HEIGHT - 1;
+		}
+		if(y == HEIGHT){
+			_y = 0;
+		}
+
+		futureCells[_x][_y].isLive = isLive;
 	}
 
 	int c = 16777215;

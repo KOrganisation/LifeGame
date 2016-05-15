@@ -19,7 +19,7 @@ public class Main implements Paintable{
 
 	int cellSize = 9;
 
-	KFrame kFrame = new KFrame(WIDTH * cellSize, HEIGHT * cellSize, "Ηϋηνό", this);
+	KFrame kFrame = new KFrame(WIDTH * cellSize, HEIGHT * cellSize, "Ζθηνό", this);
 
 
 	volatile boolean move = false;
@@ -175,7 +175,8 @@ public class Main implements Paintable{
 		while(true){
 			// step
 			makeFutureCells();
-
+			
+			
 			while(!move);
 			try{
 				Thread.sleep(90);

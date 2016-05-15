@@ -188,7 +188,7 @@ public class Main implements Paintable{
 			
 			while(!move);
 			try{
-				Thread.sleep(10);
+				Thread.sleep(100);
 			}catch(Exception ex){
 			}
 		}

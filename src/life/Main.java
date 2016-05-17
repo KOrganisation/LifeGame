@@ -12,12 +12,12 @@ import kro.frame.KFrame;
 import kro.frame.Paintable;
 
 public class Main implements Paintable{
-	final int WIDTH = 100, HEIGHT = 80;
+	final int WIDTH = 100, HEIGHT = 90;
 
 	Cell[][] cells = new Cell[WIDTH][HEIGHT];
 	Cell[][] futureCells = new Cell[WIDTH][HEIGHT];
 
-	int cellSize = 9;
+	int cellSize = 7;
 
 	KFrame kFrame = new KFrame(WIDTH * cellSize, HEIGHT * cellSize, "Жизнь", this);
 
